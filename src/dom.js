@@ -2,21 +2,9 @@
 */
 import PubSub from '../node_modules/pubsub-js'
 
-
-const eventListeners = (() => {
-  const menuButtonToggle = () => {
-    const menuButton = document.querySelector('#menu-button');
-    menuButton.addEventListener('click', menu.toggleMenu);
-  }
-
-  return {
-    menuButtonToggle,
-  };
-})();
-
 const menu = (() => {
   const menuWrapper = document.querySelector('.menu-wrapper');
-
+  
   const toggleMenu = () => {
     if (menuWrapper.classList.contains('inactive')) {
       menuWrapper.classList.add('active');
@@ -26,16 +14,54 @@ const menu = (() => {
       menuWrapper.classList.remove('active');
     }
   }
-
-  const renderTodo = () => {
-
-  }
   
+  const menuButtonToggle = () => {
+    const menuButton = document.querySelector('#menu-button');
+    menuButton.addEventListener('click', toggleMenu);
+  }
+
   return {
-    toggleMenu,
+    menuButtonToggle,
   };
 })();
 
-const menuButton = eventListeners.menuButtonToggle;
+const todos = (() => {
+  const addTodo = () => {
+    const addTodoButton = document.querySelector('#add-todo-button')
+    addTodoButton.addEventListener('click', toggleForm)
+  }
 
-export { menuButton }
+  const toggleForm = () => {
+    const formWrapper = document.querySelector('.form-wrapper');
+    if (formWrapper.classList.contains('inactive')) {
+      formWrapper.classList.add('active');
+      formWrapper.classList.remove('inactive');
+    }else {
+      formWrapper.classList.add('inactive');
+      formWrapper.classList.remove('active');
+    }
+  }
+  
+  const addForm = () => {
+    const formAddButton = document.querySelector('.form-add-button');
+    formAddButton.addEventListener('click', formData);
+  }
+
+  const formData = () => {
+    const inputData = document.querySelectorAll('.form-text-data');
+    console.log(inputData)
+  }
+
+  return {
+    addTodo,
+    addForm,
+  };
+})();
+
+
+
+const menuButton = menu.menuButtonToggle;
+const addTodoButton = todos.addTodo;
+const addFormButton = todos.addForm;
+
+export { menuButton, addTodoButton, addFormButton }

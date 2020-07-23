@@ -57,9 +57,10 @@ body {
 
 #menu-button:hover {
 	background-color: #586988;
+	transition: 0.15s linear;
 }
 
-#add-task-button {
+#add-todo-button {
 	position: absolute;
 	top: 10px;
 	right: 50px;
@@ -72,16 +73,141 @@ body {
 	border-radius: 3px;
 }
 
-#add-task-button:hover {
+#add-todo-button:hover {
 	background-color: #586988;
+	transition: 0.15s linear;
 }
 
 .menu-wrapper {
+	display: flex;
+	flex-direction: column;
 	background-color: #d8e6e6;
 	height: 100%;
 	width: 300px;
+	padding: 20px 20px;
+}
+
+.menu-tab {
+	background-color: #d8e6e6;
+	width: 100%;
+	color: #293241;
+	height: 50px;
+	padding: 10px;
+	font-size: 1.3em;
+	font-family: "Montserrat"
+}
+
+#project-> {
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+.menu-tab:hover {
+	background-color: #F2F9F9;
+	transition: 0.3s linear;
+}
+
+.form-wrapper {
+	background-color: #B6D1E1;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -60%);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 500px;
+	padding: 30px;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	font-family: "Montserrat";
+	color: #293241;
+}
+
+.todo-form {
+	height: 100%;
+	width: 100%;
+	font-size: 1.3em;
+	color: #293241;
+	font-weight:bold;
+}
+
+.todo-form-title {
+	margin-bottom: 30px;
+	font-size: 2em;
+	font-weight:bold;
+}
+
+.todo-form-input {
+	width: 400px;
+	font-size: 1em;
+	height: 40px;
+	font-family: "Overpass";
+	border: 1px solid transparent;
+	background-color: #f5f7f7;
+	border-radius: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+	color: #293241;
+}
+
+.todo-form-ul {
+	display: flex;
+	flex-flow: row;
+	margin-top: 5px;
+}
+
+#form-description {
+	margin-top: 5px;
+	padding: 10px;
+	width: 430px;
+	height: 100px;
+	font-size: 1em;
+	font-family: "Overpass";
+	border: 1px solid transparent;
+	background-color: #f5f7f7;
+	border-radius: 5px;
+	color: #293241;
+}
+
+.form-button-wrapper {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	width: 100%;
+	margin-top: 30px;
+}
+
+.form-button {
+	padding: 10px 20px;
+	background-color: #B6D1E1;
+	color: #293241;
+	border: 3px solid #293241;
+	border-radius: 3px;
+	font-family: "Overpass";
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 1;
+}
+
+.form-button:hover {
+	background-color: #293241;
+	color: white;
+	transition: 0.3s;
 }
 
 .inactive {
 	display: none;
 }
+
+
+
+/* #content > *:not(.form-wrapper){
+	filter: blur(5px);
+}
+
+.site-footer {
+	filter: blur(5px);
+} */
+
