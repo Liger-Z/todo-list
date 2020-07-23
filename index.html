@@ -5,17 +5,74 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans|Architects+Daughter">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Overpass|Noto+Sans|Architects+Daughter|Montserrat">
 </head>
 <body>
   <div id="content">
     <header class="site-header">
       <h1>Todo List</h1>
       <button id="menu-button"></button>
-      <button id="add-task-button"></button>
+      <button id="add-todo-button"></button>
     </header>
 
-    <div class="menu-wrapper inactive"></div>
+    <div class="menu-wrapper inactive">
+      <div class="menu-tab all-todos"><p>ALL</p></div>
+      <div class="menu-tab today-todos"><p>TODAY</p></div>
+      <div class="menu-tab projects-wrapper"><p>PROJECTS</p></div>
+    </div>
+
+    <div class="form-wrapper inactive">
+      <h1 class="todo-form-title">ADD TODO</h1>
+      <form class="todo-form">
+        <p>
+          <label for="title"><span>Title: </span></label><br>
+          <input type="text" class="todo-form-input form-text-data" id="form-title" name="title">
+        </p><br>
+
+        <p>
+          <label for="due-date"><span>Due Date: </span></label><br>
+          <input type="date" class="todo-form-input form-text-data" id="form-date" name="date">
+        </p><br>
+        
+        <p>
+          <label for="description"><span>Description: </span></label><br>
+          <textarea class="form-text-data" id="form-description" name="description"></textarea>
+        </p><br>
+
+        <legend>Priority: </legend>
+        <ul class="todo-form-ul">
+          <li>
+            <label for="priority-1">
+              <input type="radio" id="priority-1" name="priority" value="1">
+              1
+            </label>
+          </li>
+          <li>
+            <label for="priority-2">
+              <input type="radio" id="priority-2" name="priority" value="2">
+              2
+            </label>
+          </li>
+          <li>
+            <label for="priority-3">
+              <input type="radio" id="priority-3" name="priority" value="3">
+              3
+            </label>
+          </li>
+          <li>
+            <label for="priority-4">
+              <input type="radio" id="priority-4" name="priority" value="4">
+              4
+            </label>
+          </li>
+        </ul>
+
+        <div class="form-button-wrapper">
+          <button type="button" class="form-button form-add-button">Add</button>
+          <button type="button" class="form-button form-cancel-button">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <footer class="site-footer"></footer>
