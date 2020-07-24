@@ -1,11 +1,11 @@
 /* dom.js will handle everything to do with the DOM
 */
 import PubSub from '../node_modules/pubsub-js'
-
+// Menu for swapping between project types
 const menu = (() => {
   const menuWrapper = document.querySelector('.menu-wrapper');
   
-  const toggleMenu = () => {
+  const _toggleMenu = () => {
     if (menuWrapper.classList.contains('inactive')) {
       menuWrapper.classList.add('active');
       menuWrapper.classList.remove('inactive');
@@ -17,7 +17,7 @@ const menu = (() => {
   
   const menuButtonToggle = () => {
     const menuButton = document.querySelector('#menu-button');
-    menuButton.addEventListener('click', toggleMenu);
+    menuButton.addEventListener('click', _toggleMenu);
   }
 
   return {
@@ -25,43 +25,88 @@ const menu = (() => {
   };
 })();
 
-const todos = (() => {
-  const addTodo = () => {
-    const addTodoButton = document.querySelector('#add-todo-button')
-    addTodoButton.addEventListener('click', toggleForm)
+// Form for adding new todos
+const form = (() => {
+  const _openFormButton = document.querySelector('#add-todo-button');
+  const _formWrapper = document.querySelector('.form-wrapper');
+  const _formAddButton = document.querySelector('.form-add-button');
+  const _formCancelButton = document.querySelector('.form-cancel-button');
+  const _todoForm = document.querySelector('.todo-form');
+  const _inputData = document.querySelectorAll('.form-text-data');
+  const _priorityData = document.querySelectorAll('[name="priority"]');
+
+  const openForm = () => {
+    _openFormButton.addEventListener('click', _toggleForm)
   }
 
-  const toggleForm = () => {
-    const formWrapper = document.querySelector('.form-wrapper');
-    if (formWrapper.classList.contains('inactive')) {
-      formWrapper.classList.add('active');
-      formWrapper.classList.remove('inactive');
-    }else {
-      formWrapper.classList.add('inactive');
-      formWrapper.classList.remove('active');
+  const addForm = () => {
+    _formAddButton.addEventListener('click', _formData);
+    _formAddButton.addEventListener('click', _closeForm);
+  }
+
+  const cancelForm = () => {
+    _formCancelButton.addEventListener('click', () => {_closeForm(null, true)});
+  }
+
+  const _toggleForm = () => {
+    if (_formWrapper.classList.contains('inactive')) {
+      _formWrapper.classList.add('active');
+      _formWrapper.classList.remove('inactive');
     }
   }
   
-  const addForm = () => {
-    const formAddButton = document.querySelector('.form-add-button');
-    formAddButton.addEventListener('click', formData);
+  const _formData = () => {
+    let data = [];
+
+    _inputData.forEach((element) => {
+      data.push(element.value);
+    })
+
+    _priorityData.forEach((element) => {
+      if (element.checked === true) {
+        data.push(element.value);
+      }
+    })
+
+    return data;
   }
 
-  const formData = () => {
-    const inputData = document.querySelectorAll('.form-text-data');
-    console.log(inputData)
+  const _closeForm = (e, unconditional=false) => {
+    let notFilled = false;
+    let notChecked = true;
+
+    _inputData.forEach((element) => {
+      if (element.value === "") {
+        notFilled = true;
+      }
+    })
+
+    _priorityData.forEach((element) => {
+      if (element.checked === true) {
+        notChecked = false;
+      }
+    })
+
+    if (unconditional === false && notFilled === true | notChecked === true) {
+      return null;
+    }else {
+      _todoForm.reset();
+      _formWrapper.classList.add('inactive');
+      _formWrapper.classList.remove('active');
+    }
   }
 
   return {
-    addTodo,
+    openForm,
     addForm,
+    cancelForm,
   };
 })();
 
 
-
 const menuButton = menu.menuButtonToggle;
-const addTodoButton = todos.addTodo;
-const addFormButton = todos.addForm;
+const openFormButton = form.openForm;
+const addFormButton = form.addForm;
+const cancelFormButton = form.cancelForm;
 
-export { menuButton, addTodoButton, addFormButton }
+export { menuButton, openFormButton, addFormButton, cancelFormButton }

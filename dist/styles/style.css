@@ -202,8 +202,8 @@ body {
 }
 
 
-
-/* #content > *:not(.form-wrapper){
+/* 
+#content > *:not(.form-wrapper){
 	filter: blur(5px);
 }
 
