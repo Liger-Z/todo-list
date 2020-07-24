@@ -34,6 +34,8 @@ const form = (() => {
   const _todoForm = document.querySelector('.todo-form');
   const _inputData = document.querySelectorAll('.form-text-data');
   const _priorityData = document.querySelectorAll('[name="priority"]');
+  const _contentDiv = document.querySelector('#content');
+  const _footer = document.querySelector('.site-footer');
 
   const openForm = () => {
     _openFormButton.addEventListener('click', _toggleForm)
@@ -49,12 +51,13 @@ const form = (() => {
   }
 
   const _toggleForm = () => {
-    if (_formWrapper.classList.contains('inactive')) {
-      _formWrapper.classList.add('active');
-      _formWrapper.classList.remove('inactive');
-    }
+    _formWrapper.classList.add('active');
+    _formWrapper.classList.remove('inactive');
+    _contentDiv.classList.add('blur');
+    _footer.classList.add('footer-blur');
   }
   
+  // obtain data from form to be used in making todos
   const _formData = () => {
     let data = [];
 
@@ -71,6 +74,9 @@ const form = (() => {
     return data;
   }
 
+  /* unconditional parameter is for the close form button, so that it closes even
+  if the input fields are empty
+  */
   const _closeForm = (e, unconditional=false) => {
     let notFilled = false;
     let notChecked = true;
@@ -88,11 +94,13 @@ const form = (() => {
     })
 
     if (unconditional === false && notFilled === true | notChecked === true) {
-      return null;
+      return null; // form won't close under these conditions
     }else {
       _todoForm.reset();
       _formWrapper.classList.add('inactive');
       _formWrapper.classList.remove('active');
+      _contentDiv.classList.remove('blur');
+      _footer.classList.remove('footer-blur');
     }
   }
 
