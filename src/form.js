@@ -1,29 +1,5 @@
-/* dom.js will handle everything to do with the DOM
-*/
-import PubSub from '../node_modules/pubsub-js'
-// Menu for swapping between project types
-const menu = (() => {
-  const menuWrapper = document.querySelector('.menu-wrapper');
-  
-  const _toggleMenu = () => {
-    if (menuWrapper.classList.contains('inactive')) {
-      menuWrapper.classList.add('active');
-      menuWrapper.classList.remove('inactive');
-    }else {
-      menuWrapper.classList.add('inactive');
-      menuWrapper.classList.remove('active');
-    }
-  }
-  
-  const menuButtonToggle = () => {
-    const menuButton = document.querySelector('#menu-button');
-    menuButton.addEventListener('click', _toggleMenu);
-  }
-
-  return {
-    menuButtonToggle,
-  };
-})();
+import PubSub from '../node_modules/pubsub-js';
+import { displayArray } from './todos_logic.js'
 
 // Form for adding new todos
 const form = (() => {
@@ -37,47 +13,29 @@ const form = (() => {
   const _contentDiv = document.querySelector('#content');
   const _footer = document.querySelector('.site-footer');
 
-  const openForm = () => {
+  const openForm = function() {
     _openFormButton.addEventListener('click', _toggleForm)
   }
 
-  const addForm = () => {
-    _formAddButton.addEventListener('click', _formData);
+  const addForm = function() {
     _formAddButton.addEventListener('click', _closeForm);
   }
 
-  const cancelForm = () => {
+  const cancelForm = function() {
     _formCancelButton.addEventListener('click', () => {_closeForm(null, true)});
   }
 
-  const _toggleForm = () => {
+  const _toggleForm = function() {
     _formWrapper.classList.add('active');
     _formWrapper.classList.remove('inactive');
     _contentDiv.classList.add('blur');
     _footer.classList.add('footer-blur');
   }
   
-  // obtain data from form to be used in making todos
-  const _formData = () => {
-    let data = [];
-
-    _inputData.forEach((element) => {
-      data.push(element.value);
-    })
-
-    _priorityData.forEach((element) => {
-      if (element.checked === true) {
-        data.push(element.value);
-      }
-    })
-
-    return data;
-  }
-
   /* unconditional parameter is for the close form button, so that it closes even
   if the input fields are empty
   */
-  const _closeForm = (e, unconditional=false) => {
+ const _closeForm = function(e, unconditional=false) {
     let notFilled = false;
     let notChecked = true;
 
@@ -86,7 +44,7 @@ const form = (() => {
         notFilled = true;
       }
     })
-
+    
     _priorityData.forEach((element) => {
       if (element.checked === true) {
         notChecked = false;
@@ -96,12 +54,32 @@ const form = (() => {
     if (unconditional === false && notFilled === true | notChecked === true) {
       return null; // form won't close under these conditions
     }else {
+      _formData();
+      displayArray();
       _todoForm.reset();
       _formWrapper.classList.add('inactive');
       _formWrapper.classList.remove('active');
       _contentDiv.classList.remove('blur');
       _footer.classList.remove('footer-blur');
     }
+  }
+  
+  // obtain data from form to be used in making todos
+  const _formData = function() {
+    let data = [];
+ 
+    _inputData.forEach((element) => {
+      data.push(element.value);
+    })
+ 
+    _priorityData.forEach((element) => {
+      if (element.checked === true) {
+        data.push(element.value);
+      }
+    })
+    
+    const FORM_DATA = 'form data'
+    PubSub.publish(FORM_DATA, data);
   }
 
   return {
@@ -111,10 +89,8 @@ const form = (() => {
   };
 })();
 
-
-const menuButton = menu.menuButtonToggle;
 const openFormButton = form.openForm;
 const addFormButton = form.addForm;
 const cancelFormButton = form.cancelForm;
 
-export { menuButton, openFormButton, addFormButton, cancelFormButton }
+export { openFormButton, addFormButton, cancelFormButton }
