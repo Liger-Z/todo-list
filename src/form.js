@@ -22,7 +22,7 @@ const form = (() => {
   }
 
   const cancelForm = function() {
-    _formCancelButton.addEventListener('click', () => {_closeForm(null, true)});
+    _formCancelButton.addEventListener('click', () => {_closeForm(null, true, false)});
   }
 
   const _toggleForm = function() {
@@ -35,7 +35,7 @@ const form = (() => {
   /* unconditional parameter is for the close form button, so that it closes even
   if the input fields are empty
   */
- const _closeForm = function(e, unconditional=false) {
+ const _closeForm = function(e, unconditional=false, submit=true) {
     let notFilled = false;
     let notChecked = true;
 
@@ -50,12 +50,17 @@ const form = (() => {
         notChecked = false;
       }
     })
-
+    
     if (unconditional === false && notFilled === true | notChecked === true) {
       return null; // form won't close under these conditions
-    }else {
+    }else if (submit === true) {
       _formData();
-      displayArray();
+      _todoForm.reset();
+      _formWrapper.classList.add('inactive');
+      _formWrapper.classList.remove('active');
+      _contentDiv.classList.remove('blur');
+      _footer.classList.remove('footer-blur');
+    } else {
       _todoForm.reset();
       _formWrapper.classList.add('inactive');
       _formWrapper.classList.remove('active');

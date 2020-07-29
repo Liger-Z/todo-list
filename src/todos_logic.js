@@ -8,13 +8,7 @@ const todosModule = (() => {
     return { title, dueDate, description, priority };
   };
 
-  const _todoArray = [];
-  
-  const _createTodo = function(msg, data) {
-    let todo = _todos(data[0], data[1], data[2], data[3])
-    _todoArray.push(todo);
-  }
-
+  let _todoArray = [];
   const FORM_DATA = 'form data';
   const TODO_ARRAY = 'todo array';
 
