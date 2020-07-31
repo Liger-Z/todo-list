@@ -40,7 +40,7 @@ const form = (() => {
     let notChecked = true;
 
     _inputData.forEach((element) => {
-      if (element.value === "") {
+      if (element.value === "" && element.name !== "project" && element.name !== "time") {
         notFilled = true;
       }
     })
@@ -74,7 +74,11 @@ const form = (() => {
     let data = [];
  
     _inputData.forEach((element) => {
-      data.push(element.value);
+      if (element.type === "date" || element.type === "time") {
+        data.push(element.valueAsDate)
+      }else{
+        data.push(element.value);
+      }
     })
  
     _priorityData.forEach((element) => {

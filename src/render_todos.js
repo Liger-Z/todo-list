@@ -22,10 +22,14 @@ const todosRenderer = (() => {
 
     let todoDueDateDiv = document.createElement('div');
     todoDueDateDiv.classList.add('todo-due-date-div');
-    let todoDueDate = document.createElement('p') 
+    let todoDueDate = document.createElement('p'); 
     todoDueDate.classList.add('todo-due-date');
-    todoDueDate.textContent = todo.dueDate;
+    todoDueDate.textContent = todo.formatDate();
     todoDueDateDiv.appendChild(todoDueDate);
+    let todoDueTime = document.createElement('p');
+    todoDueTime.classList.add('todo-due-time');
+    todoDueTime.textContent= todo.formatTime();
+    todoDueDateDiv.appendChild(todoDueTime);
 
     let todoDescriptionDiv = document.createElement('div');
     todoDescriptionDiv.classList.add('todo-description-div');
@@ -57,15 +61,40 @@ const todosRenderer = (() => {
   }
 
   const _render = function(msg, data) {
-    console.log(_todoArray)
     let todoDiv = _template(_todoArray[_todoArray.length -1]);
     _todosWrapper.appendChild(todoDiv);
+  }
+
+  const _renderAll = function(project=null) {
+    let render = todo => {
+      let todoDiv = _template(todo);
+      _todosWrapper.appendChild(todoDiv);
+    }
+
+    if (project === null) {
+      _todoArray.forEach(todo => {render(todo)})
+    }else{
+      _todoArray.forEach(todo => {
+        if (todo.project === project) {render(todo)}
+      })
+    }
   }
 
   const TODO_ARRAY = 'todo array';
   PubSub.subscribe(TODO_ARRAY, function(msg, data) {
     _todoArray = data;
     _render();
+  });
+
+  const CHANGE_TAB = 'change tab';
+  PubSub.subscribe(CHANGE_TAB, function(msg, data) {
+    _renderAll(data);
+  })
+
+  PubSub.subscribe('dom loaded array', (msg, data) => {
+    _todoArray = data;
+    _renderAll()
+    console.log('hi')
   });
 })(); 
 
