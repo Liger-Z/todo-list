@@ -18,6 +18,7 @@
       <div class="menu-wrapper inactive">
         <div class="menu-tab all-todos"><p>ALL</p></div>
         <div class="menu-tab today-todos"><p>TODAY</p></div>
+        <div class="menu-tab tomorrow-todos"><p>TOMORROW</p></div>
         <div class="menu-tab projects-wrapper"><p>PROJECTS</p></div>
       </div>
   
@@ -36,10 +37,20 @@
           <label for="due-date"><span>Due Date: </span></label><br>
           <input type="date" class="todo-form-input form-text-data" id="form-date" name="date" required="required">
         </p><br>
+
+        <p>
+          <label for="due-time"><span>Time: </span></label><br>
+          <input type="time" class="todo-form-input form-text-data" id="form-time" name="time">
+        </p><br>
         
         <p>
           <label for="description"><span>Description: </span></label><br>
           <textarea class="form-text-data" id="form-description" name="description" required="required"></textarea>
+        </p><br>
+
+        <p>
+          <label for="project"><span>Project: </span></label><br>
+          <input type="text" class="todo-form-input form-text-data" id="form-project" name="project" placeholder="Optional...">
         </p><br>
 
         <legend>Priority: </legend>

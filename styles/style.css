@@ -57,7 +57,7 @@ body {
 
 #menu-button:hover {
 	background-color: #586988;
-	transition: 0.15s linear;
+	transition: 0.15s;
 }
 
 #add-todo-button {
@@ -75,7 +75,7 @@ body {
 
 #add-todo-button:hover {
 	background-color: #586988;
-	transition: 0.15s linear;
+	transition: 0.15s;
 }
 
 .form-wrapper {
@@ -83,7 +83,7 @@ body {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -60%);
+	transform: translate(-50%, -50%);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -127,6 +127,14 @@ body {
 	display: flex;
 	flex-flow: row;
 	margin-top: 5px;
+}
+
+#form-date {
+	width: 250px;
+}
+
+#form-time {
+	width: 130px;
 }
 
 #form-description {
@@ -248,9 +256,10 @@ body {
 
 .todo-due-date-div {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	height: 15%;
 	width: 100%;
+	color: #EE6C4D;
 }
 
 .todo-description-div {
