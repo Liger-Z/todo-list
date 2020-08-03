@@ -24,11 +24,11 @@ const todosRenderer = (() => {
     todoDueDateDiv.classList.add('todo-due-date-div');
     let todoDueDate = document.createElement('p'); 
     todoDueDate.classList.add('todo-due-date');
-    todoDueDate.textContent = todo.formatDate();
+    todoDueDate.textContent = todo.displayDate;
     todoDueDateDiv.appendChild(todoDueDate);
     let todoDueTime = document.createElement('p');
     todoDueTime.classList.add('todo-due-time');
-    todoDueTime.textContent= todo.formatTime();
+    todoDueTime.textContent= todo.displayTime;
     todoDueDateDiv.appendChild(todoDueTime);
 
     let todoDescriptionDiv = document.createElement('div');
@@ -46,10 +46,11 @@ const todosRenderer = (() => {
     todoProjectType.classList.add('todo-button');
     todoButtonsDiv.appendChild(todoProjectType);
 
-    let removeTodo = document.createElement('button');
-    removeTodo.classList.add('remove-todo');
-    removeTodo.classList.add('todo-button');
-    todoButtonsDiv.appendChild(removeTodo);
+    let removeTodoButton = document.createElement('button');
+    removeTodoButton.classList.add('remove-todo');
+    removeTodoButton.classList.add('todo-button');
+    removeTodoButton.addEventListener('click', removeTodo)
+    todoButtonsDiv.appendChild(removeTodoButton);
 
     todoDiv.appendChild(todoTitleDiv);
     todoContentDiv.appendChild(todoDueDateDiv);
@@ -80,6 +81,14 @@ const todosRenderer = (() => {
     }
   }
 
+  const removeTodo = function() {
+    const todoDiv = this.parentNode.parentNode.parentNode;
+    console.log(todoDiv);
+    PubSub.publish('remove todo', );
+    todoDiv.remove();
+
+  }
+
   const TODO_ARRAY = 'todo array';
   PubSub.subscribe(TODO_ARRAY, function(msg, data) {
     _todoArray = data;
@@ -91,10 +100,10 @@ const todosRenderer = (() => {
     _renderAll(data);
   })
 
+
   PubSub.subscribe('dom loaded array', (msg, data) => {
     _todoArray = data;
     _renderAll()
-    console.log('hi')
   });
 })(); 
 

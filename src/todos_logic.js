@@ -1,14 +1,18 @@
 /* todos.js will handle everything related to the 'todos' objects.
 */
 import PubSub from '../node_modules/pubsub-js'
-import { format } from '../node_modules/date-fns'
+import { format, isDate } from '../node_modules/date-fns'
 
 const todosModule = (() => {
   const _todos = (title, dueDate, dueTime, description, project, priority) => {
-    const formatDate = () => {return format(dueDate, 'do LLL y')}
-    const formatTime = () => {return format(dueTime, 'p')}
-    
-    return { title, dueDate, dueTime, description, project, priority, formatDate, formatTime};
+    /* Localstorage stores date objects as strings which means dueDate won't work if you
+    use it as an argument in format(). Creating a timestamp first lets you get around that.
+    */
+    const dateStamp = dueDate.getTime();
+    const displayDate = format(new Date(dateStamp), 'do LLL y') 
+    const timeStamp = dueTime.getTime();
+    const displayTime = format(new Date(timeStamp), 'p');
+    return { title, description, project, priority, displayDate, displayTime};
   };
 
   let _todoArray;
@@ -28,7 +32,6 @@ const todosModule = (() => {
   PubSub.subscribe(FORM_DATA, function(msg, data) {
     let todo = _todos(data[0], data[1], data[2], data[3], data[4], data[5])
     _todoArray.push(todo);
-    todo.formatDate();
     localStorage.setItem('todoArray', JSON.stringify(_todoArray));
     PubSub.publish(TODO_ARRAY, _todoArray);
   })
