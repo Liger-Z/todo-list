@@ -12,7 +12,8 @@ const todosModule = (() => {
     const displayDate = format(new Date(dateStamp), 'do LLL y') 
     const timeStamp = dueTime.getTime();
     const displayTime = format(new Date(timeStamp), 'p');
-    return { title, description, project, priority, displayDate, displayTime};
+    const id = `${title}_${Math.random() * 100}`
+    return { title, description, project, priority, displayDate, displayTime, id};
   };
 
   let _todoArray;
@@ -36,12 +37,17 @@ const todosModule = (() => {
     PubSub.publish(TODO_ARRAY, _todoArray);
   })
 
-  const displayArray = () => {console.log(_todoArray)}
+  PubSub.subscribe('remove todo', function(msg, data) {
+    for (let i=0; i < _todoArray.length; i++) {
+      if (_todoArray[i].id === data) {
+        _todoArray.splice(i, 1);
+        break
+      }
+    }
 
-  return {
-   displayArray,
-  }
+    localStorage.setItem('todoArray', JSON.stringify(_todoArray));
+  })
+
 })();
 
-const displayArray = todosModule.displayArray
-export { displayArray }
+export { todosModule }

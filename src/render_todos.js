@@ -8,6 +8,7 @@ const todosRenderer = (() => {
   const _template = function(todo) {
     let todoDiv = document.createElement('div');
     todoDiv.classList.add('todo-div');
+    todoDiv.id = todo.id;
 
     let todoTitleDiv = document.createElement('div');
     todoTitleDiv.classList.add('todo-title-div');
@@ -84,7 +85,7 @@ const todosRenderer = (() => {
   const removeTodo = function() {
     const todoDiv = this.parentNode.parentNode.parentNode;
     console.log(todoDiv);
-    PubSub.publish('remove todo', );
+    PubSub.publish('remove todo', todoDiv.id);
     todoDiv.remove();
 
   }
